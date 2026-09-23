@@ -40,6 +40,14 @@ angle: 0
  - user selects unit in interface
  - no conversion will be needed because it can use the correct gcode for the unit selected
 
+So here's a couple links to what is supported:
+https://cncphilosophy.com/grbl-g-code-commands-list/
+https://deepwiki.com/grbl/grbl/2.1-supported-g-codes
+
+And some helpful links for general reference for g and m codes
+https://cnccode.com/2025/07/29/the-complete-g-code-and-m-code-reference-guide-for-cnc-programming-2025-edition/
+https://www.machinistguides.com/g-codes/
+https://www.machinistguides.com/m-codes/
 
 Sequence:
 
@@ -97,3 +105,28 @@ M02 - program end M30 is program end with resetting to beginning
      */
 
      // have sidecar json file that can be generated with bit settings and read in at run time
+
+
+
+
+
+     For the final one, you would need to:
+
+    Remove the end-of-program command (M02)
+    Add movement command(s) to position the spindle. You probably want to retract first, then move to your destination. Something like:
+
+
+  
+
+  
+G53G0Z-1
+G53G0Y-1
+G53G0X-1
+
+This example first retracts on Z, then moves straight back, then move all the way right - i.e., similar to the current behaviour. You would want to determine how many different moves you want to make.
+
+You could combine all three moves into one - G53G0X-1Y-1Z-1. This will move in a straight line from the current position to the destination.
+
+The G53 means to use machine co-ordinates. The G0 is a rapid move. In machine co-ordinates, the upp back right corner is considered (0,0,0) location. So, all movement on the machine is into negative numbers. When the Z is at very top of travel, that’s Z=0. Moving down means subtracting values, so all valid Z machine co-ordinates are negative. Same with X and Y.
+
+Without the G53, you are moving to somewhere relative to your zeros that you set for the job. That could be anywhere on the machine, so you need to use machine co-ordinates to specify a specific point on the machine.
