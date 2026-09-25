@@ -1,0 +1,21 @@
+{
+  "bits": [
+    {
+      "bit_name": "1in surfacing bit",
+      "bit_diameter": 1.0000,
+      "bit_feed": 100,
+      "bit_pass_depth": 0.100,
+      "bit_plunge": 125.0,
+      "bit_rpm": 20000,
+      "bit_units": "in"
+    }
+  ],
+  "preferences": {
+    "units": "in",
+    "angle": 0,
+    "depth": 0.100,
+    "ZeroZ": "Bottom",
+    "ZeroXY": "BottomLeft"
+  },
+  "name": "Steve"
+}
